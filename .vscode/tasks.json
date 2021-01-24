@@ -1,0 +1,30 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Build",
+            "type": "shell",
+            "command": "rm -rf ${workspaceFolder}/dist ||: && ${config:python.pythonPath} setup.py sdist bdist_wheel",
+            "group": "build",
+            "presentation": {
+                "reveal": "always",
+                "panel": "shared"
+            }
+        },
+        {
+            "label": "Publish",
+            "type": "shell",
+            "command": "${config:python.pythonPath} -m twine upload ${workspaceFolder}/dist/* --config-file ${workspaceFolder}/.pypirc",
+            "group": "build",
+            "presentation": {
+                "reveal": "always",
+                "panel": "shared"
+            },
+            "dependsOn": [
+                "Build"
+            ]
+        }
+    ]
+}
